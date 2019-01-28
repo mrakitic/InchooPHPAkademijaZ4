@@ -121,7 +121,8 @@ function averageAge($em)
     $year /= count($em);
     return $year;
 }
-function averageIncome($em)
+
+function overallIncome($em)
 {
     $m = 0;
     $f = 0;
@@ -132,6 +133,25 @@ function averageIncome($em)
             $paymentMale += floatval(number_format(floatval(str_replace(',', '.', $rez->getMonthlyIncome())), 2));
             $m++;
         } elseif ($rez->getSpol() === 'f') {
+            $paymentFemale += floatval(number_format(floatval(str_replace(',', '.', $rez->getMonthlyIncome())), 2));
+            $f++;
+        }
+    }
+
+
+}
+
+function averageIncome($em)
+{
+    $m = 0;
+    $f = 0;
+    $paymentMale = 0;
+    $paymentFemale = 0;
+    foreach ($em as $rez) {
+        if ($rez->getGender() === 'm') {
+            $paymentMale += floatval(number_format(floatval(str_replace(',', '.', $rez->getMonthlyIncome())), 2));
+            $m++;
+        } elseif ($rez->getGender() === 'f') {
             $paymentFemale += floatval(number_format(floatval(str_replace(',', '.', $rez->getMonthlyIncome())), 2));
             $f++;
         }
@@ -161,6 +181,7 @@ function statisticMenu()
     echo "If you want to see average age press 2 \n";
     echo "If you want to see overall income press 3\n";
     echo "If you want to see average income press 4\n";
+    echo "If you want to exit press 5 \n";
 
 }
 
@@ -209,6 +230,29 @@ while ($bool) {
         case 5:
             {
                 statisticMenu();
+
+                $x = readline();
+                switch ($x) {
+
+                    case 1:
+                        echo overallAge($employees) . "\n";
+                        break;
+                    case 2:
+                        echo averageAge($employees). "\n";
+                        break;
+                    case 3:
+                        echo overallIncome($employees). "\n";
+                        break;
+                    case 4:
+                        averageIncome($employees). "\n";
+                        break;
+                    case 5:
+                        exit();
+                    default:
+                        echo "Not valid input!";
+
+            }
+            break;
             }
         case 6:
             {
