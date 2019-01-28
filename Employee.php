@@ -1,7 +1,6 @@
 <?php
 
-include_once "idsingleton.php";
-
+require "idsingleton.php";
 
 class Employee
 {
@@ -18,14 +17,6 @@ class Employee
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -116,8 +107,12 @@ class Employee
         return intval($interval);
     }
 
-    function __construct($id,$name,$lastname, $birthDate, $monthlyIncome, $gender) {
-    $this->id=$id;
+    public function __construct()
+    {
+        $this->id = IdGenerator::getInstance();
+    }
+
+    function __construct1($name,$lastname, $birthDate, $monthlyIncome, $gender) {
     $this->name=$name;
     $this->lastname=$lastname;
     $this->birthDate=$birthDate;

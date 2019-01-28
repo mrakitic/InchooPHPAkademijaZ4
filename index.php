@@ -1,6 +1,6 @@
 <?php
 
-include "Employee.php";
+include_once "Employee.php";
 
 function setString($y)
 {
@@ -43,7 +43,6 @@ function setDecimal()
 function newEmployee()
 {
     $em = new Employee();
-
     $em->setName(setString('name'));
     $em->setLastname(setString('lastname'));
     $em->setBirthDate(setDate());
@@ -146,10 +145,6 @@ function averageIncome($em)
 
 
 
-
-
-
-
 function mainMenu()
 {
     echo "if you want the list of employees enter number 1. \n";
@@ -158,6 +153,70 @@ function mainMenu()
     echo "If you want to delete employee press number 4. \n" ;
     echo "If you want to see the statistic of employees press number 5. \n";
     echo "If you want to Exit press 6. \n";
-    echo "Pick a number between 1-6. \n";
 }
 
+function statisticMenu()
+{
+    echo "If you want to see overall age press 1\n";
+    echo "If you want to see average age press 2 \n";
+    echo "If you want to see overall income press 3\n";
+    echo "If you want to see average income press 4\n";
+
+}
+
+$employees= [];
+$bool = true;
+
+while ($bool) {
+    mainMenu();
+    $yourChoice = trim(fgets(STDIN));
+    if ($yourChoice === 6) {
+        break;
+    }
+
+    switch ($yourChoice) {
+        case 1:
+            {
+                getEmployees($employees);
+                echo "Return to main menu? (Y/N)\n";
+                if (strtolower(trim(fgets(STDIN))) !== 'y') {
+                    $bool = false;
+                }
+                break;
+            }
+        case 2:
+            {
+                echo "Enter all data: \n";
+                $employees[] = newEmployee($employees);
+                break;
+            }
+        case 3:
+            {
+                echo "Enter ID of your employee:\n";
+                $temp = readline();
+                changeEmployee($temp, $employees);
+                break;
+            }
+        case 4:
+            {
+                echo "Enter the ID of employee you want to delete: \n";
+                $x = readline();
+                $employees = deleteEmployee($x, $employees);
+                break;
+
+    }
+
+        case 5:
+            {
+                statisticMenu();
+            }
+        case 6:
+            {
+                exit();
+            }
+        default:
+            {
+                echo "\n\nYou did not pick a number between 1-6\n\n";
+            }
+    }
+}
