@@ -15,7 +15,7 @@ function setNameOrLastname($y)
 function setDate()
 {
     do {
-        echo 'Enter date of birth: ';
+        echo 'Enter date of birth: (dd.mm.yyyy)';
         $d = readline();
         $date = DateTime::createFromFormat("d. m. Y", $d);
         $errors = DateTime::getLastErrors();
