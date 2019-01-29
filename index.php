@@ -2,7 +2,7 @@
 
 include_once "Employee.php";
 
-function setString($y)
+function setNameOrLastname($y)
 {
     do {
         echo 'Enter ', $y, ': ';
@@ -43,13 +43,15 @@ function setDecimal()
 function newEmployee()
 {
     $em = new Employee();
-    $em->setName(setString('name'));
-    $em->setLastname(setString('lastname'));
+    $em->setName(setNameOrLastname('name'));
+    $em->setLastname(setNameOrLastname('lastname'));
     $em->setBirthDate(setDate());
     $em->setMonthlyIncome(setDecimal());
     $em->setGender(setGender());
     return $em;
 }
+
+
 
 function getEmployees($em)
 {
@@ -63,6 +65,7 @@ function getEmployees($em)
     }
 }
 
+
 function changeEmployee($id, $em)
 {
 
@@ -73,8 +76,8 @@ function changeEmployee($id, $em)
     echo "Spol: \t\t\t", $em[$id - 1]->getGender(), "\n";
     echo "Mjesecna primanja: \t", $em[$id - 1]->getMonthlyIncome(), "\n";
     echo "Unos novih\n";
-    $em[$id - 1]->setName(setString('ime'));
-    $em[$id - 1]->setLastname(setString('prezime'));
+    $em[$id - 1]->setName(setNameOrLastname('ime'));
+    $em[$id - 1]->setLastname(setNameOrLastname('prezime'));
     $em[$id - 1]->setBirthdate(setDate());
     $em[$id - 1]->setGender(setGender());
     $em[$id - 1]->setMonthlyIncome(setDecimal());
@@ -108,7 +111,7 @@ function overallAge($em)
     $month = ($date / 30);
     $month = floor($month);
     $days = ($date % 30);
-    $str = $days . ". " . $month . ". " . $year;
+    $str = $year . " g. " . $month . " m. " . $days." d.";
     return $str;
 }
 function averageAge($em)
@@ -119,7 +122,7 @@ function averageAge($em)
     }
     $year = ($date / 365);
     $year /= count($em);
-    return $year;
+    return floor($year);
 }
 
 function overallIncome($em)
@@ -249,7 +252,7 @@ while ($bool) {
                     case 5:
                         exit();
                     default:
-                        echo "Not valid input!";
+                        echo "Please enter number between 1-5!";
 
             }
             break;
